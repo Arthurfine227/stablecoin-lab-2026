@@ -138,6 +138,37 @@ thin air without collateral appearing, the equation breaks and the coin stops be
 move by hand). It contains four TODOs, which are the subject of Ex5.
 
 ---
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    User[User]
+    Admin[Admin / Role Manager]
+    USDC[MockUSDC Collateral]
+    Vault[Vault]
+    SUSD[SimpleStablecoin]
+    Feed[Mock Price Feed]
+    OCV[OverCollateralized Vault]
+    WETH[mWETH Collateral]
+    Liquidator[Liquidator]
+
+    User -->|Faucet / receive collateral| USDC
+    User -->|Approve and deposit USDC| Vault
+    Vault -->|transferFrom collateral| USDC
+    Vault -->|Mint and burn via MINTER_ROLE| SUSD
+    SUSD -->|sUSD balance| User
+    User -->|Redeem sUSD| Vault
+    Vault -->|Return USDC| User
+    Admin -->|Grant roles and pause| SUSD
+
+    User -->|Deposit mWETH| OCV
+    WETH -->|Collateral| OCV
+    OCV -->|Read collateral price| Feed
+    OCV -->|Mint or burn sUSD| SUSD
+    Liquidator -->|Repay unhealthy debt| OCV
+    OCV -->|Seize collateral plus bonus| Liquidator
+```
+The basic Vault implements a fully backed mint–redeem loop using MockUSDC. The over-collateralized extension adds an external price feed, a minimum collateral ratio, and liquidation when a position becomes unhealthy. `SimpleStablecoin` delegates minting and burning authority to the Vault through `MINTER_ROLE`, while administrative and pausing powers remain role-controlled.
 
 ## 4. Homework
 
