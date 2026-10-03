@@ -230,6 +230,17 @@ Pick one:
 - **Wire in real Chainlink**: replace `MockPriceFeed` with Sepolia's `AggregatorV3Interface`.
   Read `decimals()` first; do not hardcode 8.
 
+### Implemented bonus: Peg Stability Module
+
+
+`src/PegStabilityModule.sol` provides a fee-free 1:1 swap channel between USDC and sUSD.
+
+- `swapUSDCForSUSD` transfers USDC reserves into the PSM and mints the same amount of sUSD.
+- `swapSUSDForUSDC` burns sUSD and returns the same amount of USDC.
+- Zero-amount swaps and redemptions exceeding available reserves revert.
+- `test/PegStabilityModule.t.sol` covers both swap directions, reserve limits, zero amounts,
+  a complete round trip, and fuzz testing of the backing invariant.
+
 ---
 
 ## 5. Common problems
