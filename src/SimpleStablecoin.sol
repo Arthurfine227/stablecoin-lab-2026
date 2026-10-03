@@ -34,12 +34,12 @@ contract SimpleStablecoin is ERC20, AccessControl, Pausable {
         _mint(to, amount);
     }
 
-    /// @dev Note that an address holding MINTER_ROLE can burn any user's balance.
-    ///      That is a deliberate simplification here — see the discussion questions.
-    function burn(address from, uint256 amount) external onlyRole(MINTER_ROLE) {
-        if (from == address(0)) revert ZeroAddress();
-        if (amount == 0) revert ZeroAmount();
-        _burn(from, amount);
+    /// @notice Burn tokens held by the authorized caller.
+/// @dev A minter may no longer choose an arbitrary account to burn from.
+///      A vault must first receive tokens through transferFrom, requiring allowance.
+    function burn(uint256 amount) external onlyRole(MINTER_ROLE) {
+    if (amount == 0) revert ZeroAmount();
+    _burn(msg.sender, amount);
     }
 
     function pause() external onlyRole(PAUSER_ROLE) {

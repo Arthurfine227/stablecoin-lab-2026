@@ -153,13 +153,13 @@ contract LoopTasksTest is Test {
     );
 
     vm.prank(attacker);
-    stable.burn(alice, amount);
+    stable.burn(amount);
 
     assertEq(stable.balanceOf(alice), amount);
     }
-    /// @dev ...but the vault can, because it holds MINTER_ROLE and burn() answers to that
-    ///      same role. This test proves the backdoor exists; it does not justify it.
-    function test_Ex4_VaultHoldsTheKey_CanBurnAnyonesBalance() public {
+    /// @dev Even an authorized vault can burn only tokens it holds itself.
+///      It cannot select Alice as the burn source without her consent.
+function test_Ex4_VaultCannotBurnUsersBalanceWithoutConsent() public {
     uint256 amount = 1000e6;
 
     usdc.faucet(alice, amount);
@@ -171,9 +171,10 @@ contract LoopTasksTest is Test {
 
     assertEq(stable.balanceOf(alice), amount);
 
+    vm.expectRevert();
     vm.prank(address(vault));
-    stable.burn(alice, amount);
+    stable.burn(amount);
 
-    assertEq(stable.balanceOf(alice), 0);
-    }
+    assertEq(stable.balanceOf(alice), amount);
+}
 }

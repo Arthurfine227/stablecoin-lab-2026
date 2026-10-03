@@ -77,8 +77,10 @@ contract VaultHandler is Test {
 
     amount = bound(amount, 1, balance);
 
-    vm.prank(user);
+    vm.startPrank(user);
+    stable.approve(address(vault), amount);
     vault.redeem(amount);
+    vm.stopPrank();
 
     ghost_redeems++;
     }

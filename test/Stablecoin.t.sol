@@ -48,6 +48,7 @@ contract StablecoinTest is Test {
         vm.startPrank(alice);
         usdc.approve(address(vault), AMOUNT);
         vault.deposit(AMOUNT);
+        stable.approve(address(vault), AMOUNT);
         vault.redeem(AMOUNT);
         vm.stopPrank();
 

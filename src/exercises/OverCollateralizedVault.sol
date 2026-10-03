@@ -99,7 +99,8 @@ contract OverCollateralizedVault {
     function repay(uint256 amount) external {
         if (amount == 0) revert ZeroAmount();
         if (amount > debtOf[msg.sender]) revert InsufficientCollateral();
-        stable.burn(msg.sender, amount);
+        IERC20(address(stable)).safeTransferFrom(msg.sender, address(this), amount);
+        stable.burn(amount);
         debtOf[msg.sender] -= amount;
     }
 
@@ -185,7 +186,8 @@ contract OverCollateralizedVault {
     debtOf[user] = 0;
     collateralOf[user] = availableCollateral - collateralToSeize;
 
-    stable.burn(msg.sender, debt);
+    IERC20(address(stable)).safeTransferFrom(msg.sender, address(this), debt);
+    stable.burn(debt);
     collateral.safeTransfer(msg.sender, collateralToSeize);
 
     emit Liquidated(user, msg.sender, debt, collateralToSeize);

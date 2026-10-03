@@ -152,8 +152,10 @@ contract OverCollateralTasksTest is Test {
         feed.setPrice(1100e8);
         assertEq(vault.collateralRatio(alice), 110, "liquidatable only once it falls to 110%");
 
-        vm.prank(bob);
+        vm.startPrank(bob);
+        stable.approve(address(vault), 1000e6);
         vault.liquidate(alice);
+        vm.stopPrank();
 
         assertEq(stable.balanceOf(bob), 0, "all of bob's sUSD is burned");
         assertEq(stable.totalSupply(), 0, "no sUSD is left in circulation once the debt is cleared");
@@ -185,8 +187,10 @@ contract OverCollateralTasksTest is Test {
         stable.transfer(bob, 1000e6);
 
         feed.setPrice(1000e8); // collateral worth 1000 against a debt of 1000 -> 100%
-        vm.prank(bob);
+        vm.startPrank(bob);
+        stable.approve(address(vault), 1000e6);
         vault.liquidate(alice);
+        vm.stopPrank();
 
         assertEq(vault.collateralOf(alice), 0);
         assertEq(weth.balanceOf(bob), 11e18, "all 1 mWETH is taken; the bonus is not fully covered");

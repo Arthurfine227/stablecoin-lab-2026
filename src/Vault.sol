@@ -46,7 +46,8 @@ contract Vault {
     function redeem(uint256 amount) external {
         if (amount == 0) revert ZeroAmount();
         if (amount > collateral.balanceOf(address(this))) revert InsufficientCollateral();
-        stable.burn(msg.sender, amount);
+        IERC20(address(stable)).safeTransferFrom(msg.sender, address(this), amount);
+        stable.burn(amount);
         collateral.safeTransfer(msg.sender, amount);
         emit Redeemed(msg.sender, amount);
     }
