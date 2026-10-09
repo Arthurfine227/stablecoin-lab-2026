@@ -216,6 +216,18 @@ which is already listed in `.gitignore` — **committing a private key scores ze
 
 Sepolia test ETH: <https://cloud.google.com/application/web3/faucet/ethereum/sepolia>
 
+#### Completed Sepolia deployment
+
+Network: Ethereum Sepolia (chain ID `11155111`)
+
+| Contract | Address |
+| --- | --- |
+| MockUSDC | [`0x161Bab72e6992606976ddAfcA9Cc3EedA11D083b`](https://sepolia.etherscan.io/address/0x161Bab72e6992606976ddAfcA9Cc3EedA11D083b#code) |
+| SimpleStablecoin | [`0xdd1c26cDfd6E0B5e0820dA024FF69524946240D7`](https://sepolia.etherscan.io/address/0xdd1c26cDfd6E0B5e0820dA024FF69524946240D7#code) |
+| Vault | [`0x208870BB7cCd04CE4ECc600B3626d15043f9de34`](https://sepolia.etherscan.io/address/0x208870BB7cCd04CE4ECc600B3626d15043f9de34#code) |
+
+All three contracts are deployed and source-verified on Sepolia.
+
 ### Tier 3 (challenge, optional)
 
 Pick one:
