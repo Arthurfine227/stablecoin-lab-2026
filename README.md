@@ -254,6 +254,11 @@ Three optional challenges were completed:
   [`bonus-tighten-burn`](https://github.com/Arthurfine227/stablecoin-lab-2026/tree/bonus-tighten-burn)
   branch. Burning another holder's balance now requires that holder's consent.
 
+#### Test result
+
+Final test run: **27 passed, 0 failed**.
+
+![Forge test passing](docs/forge-test-passing.png)
 ---
 
 ## 5. Common problems
