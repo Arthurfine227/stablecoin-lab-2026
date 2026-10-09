@@ -242,6 +242,18 @@ Pick one:
 - **Wire in real Chainlink**: replace `MockPriceFeed` with Sepolia's `AggregatorV3Interface`.
   Read `decimals()` first; do not hardcode 8.
 
+#### Completed Tier 3 work
+
+Three optional challenges were completed:
+
+- **Ex7 — Unstoppable:** completed on `main`; both challenge tests pass.
+- **Peg Stability Module:** implemented and tested on the
+  [`bonus-psm`](https://github.com/Arthurfine227/stablecoin-lab-2026/tree/bonus-psm)
+  branch, including round-trip and fuzz invariant tests.
+- **Tighten the burn permission:** implemented and tested on the
+  [`bonus-tighten-burn`](https://github.com/Arthurfine227/stablecoin-lab-2026/tree/bonus-tighten-burn)
+  branch. Burning another holder's balance now requires that holder's consent.
+
 ---
 
 ## 5. Common problems
